@@ -53,12 +53,14 @@ export default {
     justify-content: space-between;
     
     width: 100%;
-    height: 70px;
+    height: 7rem;
     background-color: #F7AF05;
+
+    font-size: 1.5rem;
   }
 
   .nav-default * {
-    margin-inline: 1rem 1rem;
+    margin-inline: 1.2rem 1.2rem;
     /* writing-mode: horizontal-tb; */
     vertical-align: middle;
     color: white;
@@ -66,7 +68,7 @@ export default {
   }
 
   .logo {
-    height: 2.5rem;
+    height: 4rem;
     margin: 0;
   }
 
@@ -77,8 +79,8 @@ export default {
 
   .nav-default .input-container {
     display: inline-block;
-    border: 1px ridge rgba(170, 50, 220, .2);
-    border-radius: 0.5rem;
+    border: 0.1rem ridge rgba(170, 50, 220, .2);
+    border-radius: 0.8rem;
     /* background-color => none */
     /* background: transparent; */
     background-color: white;
@@ -87,15 +89,15 @@ export default {
   .nav-default .input-container #nav-searchbar {
     color: black;
     box-sizing: border-box;
-    width: 12rem;
-    height: 1.5rem;
+    width: 20rem;
+    height: 2.4rem;
 
     margin: 0;
     border: 0;
-    padding: 1rem 0;
+    padding: 1.5rem 0;
     background-color: inherit;
 
-    font-size: 1rem;
+    font-size: 1.5rem;
   }
 
   .nav-default input[type=text]:focus {
@@ -103,7 +105,7 @@ export default {
   }
 
   .nav-default .search-icon {
-    width: 1.3rem;
-    margin-inline: 0 0.8rem;
+    width: 2rem;
+    margin-inline: 0 1.2rem;
   }
 </style>

@@ -2,13 +2,15 @@
   <div>
     <NuxtLayout />
     <div class="grid-container">
-      <div class="xs-12 sm-12 lg-4">로그인 창</div>
+      <LoginForm class="xs-12 sm-12 lg-4">로그인 창</LoginForm>
       <NuxtPage class="xs-12 sm-12 lg-8" />
     </div>
   </div>
 </template>
 <script>
+import LoginForm from '~/components/TheLoginForm.vue';
 export default {
+  components: { LoginForm },
   setup() {
     const route = useRoute();
     console.log(route.name);
@@ -22,9 +24,18 @@ export default {
       font-weight: normal;
       font-style: normal;
   }
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+  html {
+    font-size: 10px;
+  }
   body {
     font-family: 'IBMPlexSansKR-Regular';
     padding-top: 70px;
+    /* 15px */
+    font-size: 1.5rem;
   }
 
   .grid-container {

@@ -1,13 +1,15 @@
 <template>
   <div>
-    Index Page === Homepage
-    <br>
-    Hello, {{ name }}
+    <!-- <div v-for="(content, i) in " :key="i"> -->
+      <PostCard></PostCard>
+    <!-- </div> -->
   </div>
 </template>
 
 <script>
+import PostCard from '~/components/ThePostCard.vue';
 export default {
+  components: { PostCard },
   setup() {
     const name = 'Nuxt';
     return {
