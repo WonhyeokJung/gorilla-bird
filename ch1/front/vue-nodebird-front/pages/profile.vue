@@ -25,6 +25,7 @@ definePageMeta({
   layout: 'admin',
 });
 export default {
+  name: 'ProfileView',
   components: { FollowList },
   setup() {
     const data = 'profile';

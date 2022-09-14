@@ -26,8 +26,9 @@ definePageMeta({
   layout: false
 })
 export default {
+  name: 'SignUpView',
   setup() {
-    let signUpForms = reactive({
+    const signUpForms = reactive({
       valid: false,
       email: '',
       password: '',
@@ -35,7 +36,7 @@ export default {
       nickname: '',
       terms: false,
     });
-    let errors = reactive({
+    const errors = reactive({
       email: !!signUpForms.email.value || '유효한 이메일이 아닙니다.'
     });
 
@@ -62,7 +63,6 @@ export default {
 
   .default-form {
     display: flex;
-    
     flex-direction: column;
     align-items: left;
   }

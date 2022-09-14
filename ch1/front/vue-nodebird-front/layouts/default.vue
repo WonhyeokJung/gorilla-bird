@@ -25,6 +25,7 @@
 </template>
 <script>
 export default {
+  name: 'DefaultLayout',
   setup() {
     // useHead({
     //   title: 'layout/default'
@@ -35,10 +36,10 @@ export default {
       titleTemplate: '%s - Site Title'
     });
     const route = useRoute();
-  return {
-    dynamic: route.name,
-    isLoggedIn: ref(false),
-  }
+    return {
+      dynamic: route.name,
+      isLoggedIn: ref(false),
+    }
   },
 }
 </script>
@@ -49,11 +50,10 @@ export default {
     top: 0;
     left: 0;
     bottom: 0;
-    align-items: center;
-    justify-content: space-between;
-    
     width: 100%;
     height: 7rem;
+    align-items: center;
+    justify-content: space-between;
     background-color: #F7AF05;
 
     font-size: 1.5rem;

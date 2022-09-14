@@ -3,17 +3,22 @@
     <!-- <div v-for="(content, i) in " :key="i"> -->
       <PostCard></PostCard>
     <!-- </div> -->
+    <div @click="indexStore.increment">{{ indexStore.count }}, {{ indexStore.doubleCount }}</div>
   </div>
 </template>
 
 <script>
 import PostCard from '~/components/ThePostCard.vue';
+import { useIndexStore } from '~/stores/index.js';
 export default {
+  name: 'IndexView',
   components: { PostCard },
   setup() {
     const name = 'Nuxt';
+    const indexStore = useIndexStore();
     return {
       name,
+      indexStore
     }
   },
 }
