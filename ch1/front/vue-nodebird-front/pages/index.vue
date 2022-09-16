@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- <div v-for="(content, i) in " :key="i"> -->
-      <PostCard></PostCard>
+    <PostCard />
     <!-- </div> -->
     <div @click="indexStore.increment">{{ indexStore.count }}, {{ indexStore.doubleCount }}</div>
   </div>

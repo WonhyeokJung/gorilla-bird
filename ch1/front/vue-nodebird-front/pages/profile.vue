@@ -5,16 +5,16 @@
       <h2>{{ data }} 프로필</h2>
       <form action="" method="post" class="login-form">
         <label for="nickname">닉네임</label>
-        <input type="nickname" name="" id="profile-nickname" :placeholder="data" required>
+        <input id="profile-nickname" type="nickname" name="" :placeholder="data" required>
         <button type="submit">수정</button>
       </form>
       <div>
         <h3>팔로잉</h3>
-        <FollowList></FollowList>
+        <FollowList />
       </div>
       <div>
         <h3>팔로워</h3>
-        <FollowList></FollowList>
+        <FollowList />
       </div>
     </div>
   </div>

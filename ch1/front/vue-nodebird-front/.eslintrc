@@ -8,8 +8,7 @@
     "node": true
   },
   "extends": [
-    "plugin:vue/vue3-essential",
-    "@vue/standard"
+    "plugin:vue/vue3-recommended"
   ],
   "plugins": [
 
@@ -31,7 +30,9 @@
           "^\\$_"
         ]
       }
-    ]
+    ],
+    "vue/max-attributes-per-line": 0,
+    "vue/singleline-html-element-content-newline": 0
   },
   "globals": {
     "ref": false,

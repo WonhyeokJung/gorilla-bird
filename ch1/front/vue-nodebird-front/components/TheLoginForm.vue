@@ -1,26 +1,33 @@
 <template>
   <div class="login-form-container">
-    <div class="card card-sm">
+    <div v-if="!isLoggedIn" class="card card-sm">
       <div style="text-align: center">
         <h2>로그인</h2>
       </div>
       <form action="" method="post" class="login-form" @submit.prevent="onSubmitForm">
         <label for="email">이메일</label>
-        <input v-model="email" type="email" name="" id="email" required>
-        <div class="form-border"></div>
+        <input id="email" v-model="email" type="email" name="" required>
+        <div class="form-border" />
         <label for="password">비밀번호</label>
-        <input v-model="password" type="password" name="" id="password" required>
-        <div class="form-border"></div>
+        <input id="password" v-model="password" type="password" name="" required>
+        <div class="form-border" />
         <Nuxt-link class="signup-link" to="/signup">Don't have an account?</Nuxt-link>
         <div class="button-container">
-          <button type="submit" :disabled="!valid.value">로그인</button>
+          <button type="submit" :disabled="!valid.value" @click="onLogin">로그인</button>
         </div>
       </form>
       {{ email }}
     </div>
+    <div v-else>
+      <h3>{{ isLoggedIn.nickname || isLoggedIn.email }}님 로그인 되었습니다.</h3>
+      <div class="button-container">
+        <button type="" @click="onLogout">로그아웃</button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
+import { useUsersStore } from '~/stores/users'
 export default {
   name: 'TheLoginFormComponent',
   components: {},
@@ -38,10 +45,25 @@ export default {
     const valid = ref(false);
     const email = ref('');
     const password = ref('');
+    const usersStore = useUsersStore();
+    const isLoggedIn = computed(() => usersStore.state.me);
+    const onLogin = function () {
+      usersStore.login({
+        email: email.value,
+        password: password.value
+      });
+    }
+    const onLogout = function () {
+      usersStore.logout()
+    }
     return {
       valid,
       email,
       password,
+      usersStore,
+      isLoggedIn,
+      onLogin,
+      onLogout
     }
   },
   data() {
