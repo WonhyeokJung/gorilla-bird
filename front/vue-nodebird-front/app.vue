@@ -2,18 +2,33 @@
   <div>
     <NuxtLayout />
     <div class="grid-container">
-      <LoginForm class="xs-12 sm-12 lg-4">로그인 창</LoginForm>
       <NuxtPage class="xs-12 sm-12 lg-8" />
     </div>
+    <Html>
+      <Head>
+        <Title>{{ dynamic }}</Title>
+      </Head>
+    </Html>
   </div>
 </template>
 <script>
-import LoginForm from '~/components/TheLoginForm.vue';
+import { useUsersStore } from '~/stores/users'
 export default {
-  components: { LoginForm },
   setup() {
     const route = useRoute();
+    const router = useRouter();
+    const usersStore = useUsersStore();
     console.log(route.name);
+    useHead({
+      titleTemplate: '%s - Site Title'
+    });
+    if (!usersStore.me) {
+      router.push({ name: 'intro' })
+    }
+    return {
+      usersStore,
+      dynamic: computed(() => route.name)
+    }
   }
 }
 </script>

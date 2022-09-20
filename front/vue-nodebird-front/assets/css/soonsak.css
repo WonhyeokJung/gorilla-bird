@@ -1,0 +1,21 @@
+.center-block {
+  display: block;
+  margin-inline: auto;
+  float: none !important;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-10 {
+  margin-bottom: 10;
+}

@@ -16,11 +16,11 @@
         <nuxt-link to="/signup">Sign Up</nuxt-link>
       </nav>
     </div>
-    <Html>
+    <!-- <Html>
       <Head>
         <Title>{{ dynamic }}</Title>
       </Head>
-    </Html>
+    </Html> -->
   </div>
 </template>
 <script>
@@ -37,7 +37,7 @@ export default {
     });
     const route = useRoute();
     return {
-      dynamic: route.name,
+      dynamic: computed(() => route.name),
       isLoggedIn: ref(false),
     }
   },

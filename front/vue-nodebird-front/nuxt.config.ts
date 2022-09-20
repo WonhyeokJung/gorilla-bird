@@ -13,5 +13,8 @@ export default defineNuxtConfig({
       ]
     }
     ]
+  ],
+  css: [
+    '~/assets/css/soonsak.css'
   ]
 })
