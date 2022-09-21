@@ -14,7 +14,9 @@ export default defineNuxtConfig({
     }
     ]
   ],
+  // 전역 css
   css: [
     '~/assets/css/soonsak.css'
-  ]
+  ],
+  // global loading
 })

@@ -2,7 +2,8 @@
   <div>
     <NuxtLayout />
     <div class="grid-container">
-      <NuxtPage class="xs-12 sm-12 lg-8" />
+      <!-- login 혹은 회원가입 후 좌측은 프로필 컴포넌트 보이도록 -->
+      <NuxtPage class="xs-12 sm-12 lg-12" />
     </div>
     <Html>
       <Head>
@@ -15,13 +16,13 @@
 import { useUsersStore } from '~/stores/users'
 export default {
   setup() {
+    useHead({
+      titleTemplate: '%s - Site Title'
+    });
     const route = useRoute();
     const router = useRouter();
     const usersStore = useUsersStore();
     console.log(route.name);
-    useHead({
-      titleTemplate: '%s - Site Title'
-    });
     if (!usersStore.me) {
       router.push({ name: 'intro' })
     }
@@ -48,46 +49,9 @@ export default {
   }
   body {
     font-family: 'IBMPlexSansKR-Regular';
+    height: calc(100vh - 70px);
     padding-top: 70px;
     /* 15px */
     font-size: 1.5rem;
-  }
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-  }
-  /** 빈공간 있을 경우 기본세팅(현재는 801~1023 사이 */
-  .grid-container * {
-    grid-column: auto;
-  }
-  /** 576px 이하 */
-  @media screen and (max-width: 576px) {
-    .xs-12 {
-      grid-column: auto / span 12;
-    }
-  }
-
-  @media screen and (min-width: 576px) {
-    .sm-12 {
-      grid-column: auto / span 12;
-    }
-  }
-  /* grid-lg 정의 */
-  @media screen and (min-width: 1024px) {
-    .lg-auto {
-      grid-column: auto;
-    }
-    .lg-4 {
-      grid-column: auto / span 4;
-    }
-    .lg-8 {
-      grid-column: auto / span 8;
-    }
-  }
-  @media screen and (min-width: 1368px) {
-    .xl-12 {
-      grid-column: auto / span 12;
-    }
   }
 </style>

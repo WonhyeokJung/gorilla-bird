@@ -47,6 +47,7 @@ export default {
 </script>
 <style scoped>
   .intro-container {
+    padding-top: 40px;
     user-select: none;
     -webkit-user-select: none;
 
