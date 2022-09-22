@@ -1,6 +1,6 @@
 export const useUsersStore = defineStore('users', () => {
   const state = reactive({
-    me: null,
+    me: { nickname: 'abc', email: 'abc@abc.com' },
   });
 
   function signUp(payload) {

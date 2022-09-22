@@ -11,46 +11,49 @@
       <input 
         id="signup-email" 
         v-model="signUpForms.email.value" 
-        :class="[{ invalid: errors.email.value.length > 0 || !signUpForms.email.value, 'invalid-submit': !!submit }, 'border-none', 'outline-none']" 
+        :class="[{ invalid: errors.email.value.length > 0 || !signUpForms.email.value, 'invalid-warning': !!submit }, 'border-none', 'outline-none']" 
         type="email" 
         name="" 
         placeholder="e-mail" 
         required 
+        @focus="onFocus" 
         @invalid.prevent
       >
-      <div :class="[errors.email.value.length > 0 ? 'warning' : 'valid']">{{ errors.email.value }}</div>
+      <div :class="{ 'text-warning': errors.email.value.length > 0 }">{{ errors.email.value }}</div>
       <label for="password">Password</label>
       <!-- css로 (pattern invalid) 조정 -->
       <input 
         id="signup-password"
         v-model="signUpForms.password.value"
-        :class="[{ invalid: errors.password.value.length > 0, 'invalid-submit': !!submit }, 'border-none', 'outline-none']"
+        :class="[{ invalid: errors.password.value.length > 0, 'invalid-warning': !!submit }, 'border-none', 'outline-none']"
         pattern="(?=.*\d)(?=.*[a-z])(?=.*[^A-Za-z0-9])(?=.*[A-Z]).{8,}" 
         type="password" 
         name=""
         placeholder="password"
         required
+        @focus="onFocus" 
         @invalid.prevent
       >
-      <div :class="[errors.password.value.length > 0 ? 'warning' : 'valid']">{{ errors.password.value }}</div>
+      <div :class="[errors.password.value.length > 0 ? 'text-warning' : '']">{{ errors.password.value }}</div>
       <!-- watcheffect + js 이용 -->
       <label for="password">Confirm Password</label>
       <input 
         id="signup-confirm-password" 
         v-model="signUpForms.confirmPassword.value" 
-        :class="[{ invalid: errors.confirmPassword.value.length !== 12 || !signUpForms.confirmPassword.value, 'invalid-submit': !!submit }, 'border-none', 'outline-none']" 
+        :class="[{ invalid: errors.confirmPassword.value.length > 0 || errors.password.value.length > 0, 'invalid-warning': !!submit }, 'border-none', 'outline-none']" 
         type="password" 
         name="" 
         placeholder="Confirm password" 
         required 
+        @focus="onFocus" 
         @invalid.prevent
       >
-      <div :class="[errors.confirmPassword.value.length > 0 ? 'warning' : 'valid']">{{ errors.confirmPassword.value }}</div>
+      <div :class="[errors.confirmPassword.value.length > 0 ? 'text-warning' : '']">{{ errors.confirmPassword.value }}</div>
       <label for="password">Nickname</label>
       <input 
         id="signup-nickname" 
         v-model="signUpForms.nickname.value"
-        :class="[{ invalid: !signUpForms.nickname.value, 'invalid-submit': !!submit }, 'border-none', 'outline-none']" 
+        :class="[{ invalid: !signUpForms.nickname.value, 'invalid-warning': !!submit }, 'border-none', 'outline-none']" 
         type="nickname" 
         name="" 
         placeholder="nickname" 
@@ -73,9 +76,13 @@ definePageMeta({
 export default {
   name: 'SignUpView',
   setup() {
+    // state management
     const usersStore = useUsersStore();
+    // vue-router
     const router = useRouter();
-    const submit = ref(false);
+    // plugin
+    const { $validCheck } = useNuxtApp();
+
     const signUpForms = reactive({
       valid: false,
       email: '',
@@ -83,21 +90,22 @@ export default {
       confirmPassword: '',
       nickname: '',
     });
-
     const errors = reactive({
-      email: computed(() => /^[0-9a-zA-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,4}$/.test(signUpForms.email) ? '' : '이메일 양식이 맞지 않습니다.'),
-      password: computed(() => /(?=.*\d)(?=.*[a-z])(?=.*[^A-Za-z0-9])(?=.*[A-Z]).{8,}/.test(signUpForms.password) ? '' : '비밀번호는 대소문자, 숫자 그리고 특수문자 최소 하나씩 포함하고 8자 이상이어야 합니다.'),
-      confirmPassword: computed(() => (signUpForms.password === signUpForms.confirmPassword) ? '비밀번호가 일치합니다.' : '비밀번호가 일치하지 않습니다.'),
+      // email: computed(() => /^[0-9a-zA-z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,4}$/.test(signUpForms.email) ? '' : '이메일 양식이 맞지 않습니다.'),
+      email: computed(() => $validCheck('email', signUpForms.email)),
+      password: computed(() => $validCheck('password', signUpForms.password)),
+      confirmPassword: computed(() => $validCheck('confirmPassword', signUpForms.password, signUpForms.confirmPassword)),
     });
 
-    const onFocus = function () {
-      submit.value = false;
-    }
+    const submit = ref(false);
+    const onFocus = () => submit.value = false;
+    const onSubmit = () => submit.value = true;
 
-    const onSubmit = function () {
-      submit.value = true;
-    }
     const onSubmitForm = async function () {
+      // error message 있을 시, 가입 방지
+      for (let error of Object.values(errors)) {
+        if (error) return;
+      }
       try {
         await usersStore.signUp({
           nickname: signUpForms.nickname,
@@ -118,8 +126,8 @@ export default {
       // valids,
       onSubmitForm,
       usersStore,
-      onSubmit,
       submit,
+      onSubmit,
       onFocus
     }
   },
@@ -141,25 +149,17 @@ export default {
     border-bottom: 2px solid grey;
   }
 
-  .invalid-submit {
+  .invalid-warning {
     border-color: red;
   }
 
-  #signup-email:invalid:not(:focus):not(:placeholder-shown) {
+  input.invalid:not(:focus):not(:placeholder-shown) {
     background: pink;
   }
 
-  input:invalid:not(:focus):not(:placeholder-shown) {
-    background: pink;
-  }
-
-  .warning {
+  .text-warning {
     display: none;
     font-size: 1.2rem;
-  }
-
-  .valid {
-    display: none;
   }
 
   label {
@@ -176,14 +176,7 @@ export default {
   input::placeholder {
     opacity: 0;
   }
-  input:not(:placeholder-shown) + .warning{
-    display: block;
-    color: red;
-  }
-  #signup-password::placeholder {
-    opacity: 0;
-  }
-  #signup-password:invalid:not(:placeholder-shown) + .warning {
+  input:not(:placeholder-shown) + .text-warning{
     display: block;
     color: red;
   }

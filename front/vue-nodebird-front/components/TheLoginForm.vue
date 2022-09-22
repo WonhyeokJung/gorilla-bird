@@ -7,12 +7,12 @@
       <form action="" method="post" class="login-form" @submit.prevent="onSubmitForm">
         <div ref="emailInputContainer" :class="['default-input-container']">
           <label for="login-email">이메일</label>
-          <input id="login-email" ref="loginEmail" v-model="email" type="email" name="" required>
+          <input id="login-email" v-model="email" type="email" name="" required @focus="onFocusEmail" @blur="onBlurEmail">
           <div class="form-border" />
         </div>
         <div ref="passwordInputContainer" :class="['default-input-container']">
           <label for="password">비밀번호</label>
-          <input id="password" ref="loginPassword" v-model="password" type="password" name="" required>
+          <input id="password" ref="loginPassword" v-model="password" type="password" name="" required @focus="onFocusPassword" @blur="onBlurPassword">
           <div class="form-border" />
         </div>
         <Nuxt-link class="signup-link" to="/signup">Don't have an account?</Nuxt-link>
@@ -51,6 +51,14 @@ export default {
     const password = ref('');
     const usersStore = useUsersStore();
     const isLoggedIn = computed(() => usersStore.state.me);
+    const onSubmitForm = function () {
+      // validation 검사 필수
+      usersStore.login({
+        email: email.value,
+        password: password.value,
+        nickname: 'default 명칭'
+      })
+    }
     const onLogin = function () {
       usersStore.login({
         email: email.value,
@@ -63,26 +71,22 @@ export default {
 
     const emailInputContainer = ref(null);
     const passwordInputContainer = ref(null);
-    const loginEmail = ref(null);
-    const loginPassword = ref(null);
-    onMounted( () => {
-      loginEmail.value.addEventListener('focus', function (e) {
-        emailInputContainer.value.classList.add('focus');
-      });
-      loginEmail.value.addEventListener('focusout', function (e) {
-        if (!email.value.length) {
-          emailInputContainer.value.classList.remove('focus');
-        }
-      });
-      loginPassword.value.addEventListener('focus', function (e) {
-        passwordInputContainer.value.classList.add('focus');
-      })
-      loginPassword.value.addEventListener('focusout', function (e) {
-        if (!password.value.length) {
-          passwordInputContainer.value.classList.remove('focus');
-        }
-      })
-    });
+    const onFocusEmail = function () {
+      emailInputContainer.value.classList.add('focus');
+    }
+    const onBlurEmail = function () {
+      if (!email.value.length) {
+        emailInputContainer.value.classList.remove('focus');
+      }
+    }
+    const onFocusPassword = function () {
+      passwordInputContainer.value.classList.add('focus');
+    }
+    const onBluePassword = function () {
+      if (!password.value.length) {
+            passwordInputContainer.value.classList.remove('focus');
+          }
+    }
 
     return {
       valid,
@@ -92,8 +96,11 @@ export default {
       isLoggedIn,
       onLogin,
       onLogout,
-      loginEmail,
-      loginPassword,
+      onSubmitForm,
+      onFocusEmail,
+      onBlurEmail,
+      onFocusPassword,
+      onBluePassword,
       emailInputContainer,
       passwordInputContainer
     }

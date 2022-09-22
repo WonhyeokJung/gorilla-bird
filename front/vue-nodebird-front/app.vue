@@ -23,7 +23,7 @@ export default {
     const router = useRouter();
     const usersStore = useUsersStore();
     console.log(route.name);
-    if (!usersStore.me) {
+    if (!usersStore.state.me) {
       router.push({ name: 'intro' })
     }
     return {

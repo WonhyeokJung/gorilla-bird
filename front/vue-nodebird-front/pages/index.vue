@@ -1,31 +1,31 @@
 <template>
   <div>
-    <!-- <div v-for="(content, i) in " :key="i"> -->
-    <PostCard />
-    <!-- </div> -->
+    <PostForm v-if="!!user" />
+    {{ user }}님, 어서오세요!
+    <PostCard v-for="p in mainPosts" :key="p.id" :post="p" />
     <div @click="indexStore.increment">{{ indexStore.count }}, {{ indexStore.doubleCount }}</div>
   </div>
 </template>
 
 <script>
 import PostCard from '~/components/ThePostCard.vue';
+import PostForm from '~/components/ThePostForm.vue'
 import { useIndexStore } from '~/stores/index';
 import { useUsersStore } from '~/stores/users';
+import { usePostsStore } from '~/stores/posts';
 export default {
   name: 'IndexView',
-  components: { PostCard },
+  components: { PostCard, PostForm },
   setup() {
     const name = 'Nuxt';
     const indexStore = useIndexStore();
     const usersStore = useUsersStore();
-    onMounted(() => {
-      if (!usersStore.state.me) {
-        console.log(
-          'hi'
-        )
-      }
-    });
+    const postsStore = usePostsStore();
+    const user = computed(() => usersStore.state.me.nickname || usersStore.state.me.email);
+    const mainPosts = computed(() => postsStore.state.mainPosts);
     return {
+      user,
+      mainPosts,
       name,
       indexStore
     }
