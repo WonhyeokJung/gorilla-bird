@@ -40,3 +40,6 @@ npm run preview
 ```
 
 Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
+
+## 다음작업
+index 화면 디자인 / 로그인 항목 css 마무리 / 로그인 중복 컨텐츠및 불필요 컨텐츠 정리, ref 되도록 제거
