@@ -1,4 +1,4 @@
-export function eventBus() {
+export function useEventBus() {
   let eventsListeners = {};
   /**
    *

@@ -16,16 +16,6 @@ definePageMeta({
 export default {
   name: 'IntroView',
   components: { LoginForm },
-  directives: {},
-  provide() {
-    return {
-    }
-  },
-  inject() {
-    return {
-    }
-  },
-  props: {},
   setup() {
     onMounted(() => {
       const { $trigger } = useNuxtApp();

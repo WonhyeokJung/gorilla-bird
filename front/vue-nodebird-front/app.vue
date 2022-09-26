@@ -3,8 +3,12 @@
     <NuxtLayout />
     <div class="grid-container">
       <!-- login 혹은 회원가입 후 좌측은 프로필 컴포넌트 보이도록 -->
-      <TheLoadingBar class="loading" :loading="loadingStatus" />
-      <NuxtPage class="xs-12 sm-12 lg-12" />
+      <BaseLoadingBar class="loading" :loading="loadingStatus" />
+      <NuxtPage v-if="false" class="xs-12 sm-12 lg-12" />
+      <template v-else>
+        <TheProfileCard class="xs-12 sm-12 lg-4" />
+        <NuxtPage class="xs-12 sm-12 lg-8" />
+      </template>
     </div>
     <Html>
       <Head>
@@ -14,10 +18,11 @@
   </div>
 </template>
 <script>
-import { useUsersStore } from '~/stores/users'
-import TheLoadingBar from './components/TheLoadingBar.vue';
+import { useUsersStore } from '~/stores/users';
+import TheProfileCard from '~/components/TheProfileCard.vue'
+import BaseLoadingBar from './components/BaseLoadingBar.vue';
 export default {
-  components: { TheLoadingBar },
+  components: { BaseLoadingBar, TheProfileCard },
   setup() {
     useHead({
       titleTemplate: '%s - Site Title'
@@ -27,7 +32,8 @@ export default {
     const usersStore = useUsersStore();
     console.log(route.name);
 
-    const { eventsListeners, $on, $off, $trigger } = useNuxtApp();
+    const { $on, $off, $trigger } = useNuxtApp();
+    // const { $on, $trigger } = useEventBus();
     const loadingStatus = ref(true);
     $on('startLoading', () => {
       loadingStatus.value = true;
@@ -41,8 +47,9 @@ export default {
     });
 
     if (!usersStore.state.me) {
-      router.push({ name: 'intro' })
+      router.push({ name: 'intro' });
     }
+    
     return {
       usersStore,
       dynamic: computed(() => route.name),
@@ -66,7 +73,7 @@ export default {
     font-size: 10px;
   }
   body {
-    font-family: 'IBMPlexSansKR-Regular';
+    font-family: 'IBMPlexSansKR-Regular' !important;
     height: calc(100vh - 70px);
     padding-top: 70px;
     /* 15px */

@@ -10,3 +10,11 @@ export const useIndexStore = defineStore('index', () => {
     doubleCount
   }
 });
+
+/* <template>
+<div @click="indexStore.increment">{{ indexStore.count }}, {{ indexStore.doubleCount }}</div>
+</template>
+<script setup>
+  import { useIndexStore } from '@/stores/index.js';
+  const indexStore = useIndexStore();
+</script> */

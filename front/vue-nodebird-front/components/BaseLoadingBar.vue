@@ -1,17 +1,17 @@
 <template>
-  <div>
-    <div v-if="loading" class="lds-facebook">
+  <div v-if="loading">
+    <div class="lds-facebook">
       <div />
       <div />
       <div />
     </div>
     <!-- z-index 추가시 navbar도 가리기 가능. -->
-    <div v-if="loading" style="position:fixed; width: 100vw; height: 100vh; backdrop-filter: blur(3px);" />
+    <div style="position:fixed; width: 100vw; height: 100vh; backdrop-filter: blur(3px);" />
   </div>
 </template>
 <script>
 export default {
-  name: 'TheLoadingBar',
+  name: 'BaseLoadingBar',
   props: {
     loading: {
       type: Boolean,

@@ -3,14 +3,12 @@
     <PostForm v-if="!!user" />
     {{ user }}님, 어서오세요!
     <PostCard v-for="p in mainPosts" :key="p.id" :post="p" />
-    <div @click="indexStore.increment">{{ indexStore.count }}, {{ indexStore.doubleCount }}</div>
   </div>
 </template>
 
 <script>
 import PostCard from '~/components/ThePostCard.vue';
-import PostForm from '~/components/ThePostForm.vue'
-import { useIndexStore } from '~/stores/index';
+import PostForm from '~/components/ThePostForm.vue';
 import { useUsersStore } from '~/stores/users';
 import { usePostsStore } from '~/stores/posts';
 export default {
@@ -18,7 +16,6 @@ export default {
   components: { PostCard, PostForm },
   setup() {
     const name = 'Nuxt';
-    const indexStore = useIndexStore();
     const usersStore = useUsersStore();
     const postsStore = usePostsStore();
     const user = computed(() => usersStore.state.me.nickname || usersStore.state.me.email);
@@ -33,7 +30,6 @@ export default {
       user,
       mainPosts,
       name,
-      indexStore
     }
   },
 }
