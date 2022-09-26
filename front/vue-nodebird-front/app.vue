@@ -6,8 +6,12 @@
       <BaseLoadingBar class="loading" :loading="loadingStatus" />
       <NuxtPage v-if="false" class="xs-12 sm-12 lg-12" />
       <template v-else>
-        <TheProfileCard class="xs-12 sm-12 lg-4" />
-        <NuxtPage class="xs-12 sm-12 lg-8" />
+        <aside class="xs-12 sm-12 lg-4">
+          <TheProfileCard />
+        </aside>
+        <main class="xs-12 sm-12 lg-8">
+          <NuxtPage />
+        </main>
       </template>
     </div>
     <Html>
@@ -49,7 +53,7 @@ export default {
     if (!usersStore.state.me) {
       router.push({ name: 'intro' });
     }
-    
+
     return {
       usersStore,
       dynamic: computed(() => route.name),
