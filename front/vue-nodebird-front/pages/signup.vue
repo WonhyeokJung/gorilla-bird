@@ -81,7 +81,7 @@ export default {
     // vue-router
     const router = useRouter();
     // plugin
-    const { $validCheck } = useNuxtApp();
+    const { $trigger, $validCheck } = useNuxtApp();
 
     const signUpForms = reactive({
       valid: false,
@@ -116,6 +116,10 @@ export default {
         console.log(err);
       }
     }
+
+    onMounted(() => {
+      $trigger('endLoading');
+    })
 
     // error handling
     // throw createError({ statusCode: 405, statusMessage: 'Error, Error'});

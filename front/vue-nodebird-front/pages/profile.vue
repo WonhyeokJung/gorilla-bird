@@ -34,6 +34,11 @@ export default {
       title: 'Profile'
     });
 
+    onMounted(() => {
+      const { $trigger } = useNuxtApp();
+      $trigger('endLoading');
+    });
+
     return {
       data
     }

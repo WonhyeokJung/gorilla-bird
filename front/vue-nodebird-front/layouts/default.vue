@@ -3,7 +3,8 @@
     <div class="nav-default">
       <div>
         <nuxt-link to="/" style="margin-inline: 0 0;"><img class="logo" src="../assets/gorilla-2.png" alt=""></nuxt-link>
-        <h1><nuxt-link to="/">GorillaBird</nuxt-link></h1>
+        <!-- 전체 페이지를 새로고치는 문제. -->
+        <h1><nuxt-link to="/" @click="$router.go({ path: '/', force: true })">GorillaBird</nuxt-link></h1>
       </div>
       <nav>
         <div class="input-container">
@@ -24,8 +25,10 @@
   </div>
 </template>
 <script>
+import { useUsersStore } from '~/stores/users';
 export default {
   name: 'DefaultLayout',
+  components: {},
   setup() {
     // useHead({
     //   title: 'layout/default'
@@ -36,9 +39,11 @@ export default {
       titleTemplate: '%s - Site Title'
     });
     const route = useRoute();
+    const usersStore = useUsersStore();
+
     return {
       dynamic: computed(() => route.name),
-      isLoggedIn: ref(false),
+      isLoggedIn: computed(() => usersStore.state.me),
     }
   },
 }

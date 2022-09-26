@@ -26,23 +26,12 @@ export default {
     }
   },
   props: {},
-  setup() {},
-  data() {
-    return {
-      sampleData: ''
-    }
+  setup() {
+    onMounted(() => {
+      const { $trigger } = useNuxtApp();
+      $trigger('endLoading');
+    });
   },
-  computed: {},
-  watch: {},
-  beforeCreate() {},
-  created() {},
-  beforeMount() {},
-  mounted() {},
-  beforeUpdate() {},
-  updated() {},
-  beforeUnmount() {},
-  unmounted() {},
-  methods: {}
 }
 </script>
 <style scoped>

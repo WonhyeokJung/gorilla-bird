@@ -3,6 +3,7 @@
     <NuxtLayout />
     <div class="grid-container">
       <!-- login 혹은 회원가입 후 좌측은 프로필 컴포넌트 보이도록 -->
+      <TheLoadingBar class="loading" :loading="loadingStatus" />
       <NuxtPage class="xs-12 sm-12 lg-12" />
     </div>
     <Html>
@@ -14,7 +15,9 @@
 </template>
 <script>
 import { useUsersStore } from '~/stores/users'
+import TheLoadingBar from './components/TheLoadingBar.vue';
 export default {
+  components: { TheLoadingBar },
   setup() {
     useHead({
       titleTemplate: '%s - Site Title'
@@ -23,12 +26,27 @@ export default {
     const router = useRouter();
     const usersStore = useUsersStore();
     console.log(route.name);
+
+    const { eventsListeners, $on, $off, $trigger } = useNuxtApp();
+    const loadingStatus = ref(true);
+    $on('startLoading', () => {
+      loadingStatus.value = true;
+    });
+    $on('endLoading', () => {
+      loadingStatus.value = false;
+    });
+    router.beforeEach(async (to, from, next) => {
+      $trigger('startLoading');
+      await next();
+    });
+
     if (!usersStore.state.me) {
       router.push({ name: 'intro' })
     }
     return {
       usersStore,
-      dynamic: computed(() => route.name)
+      dynamic: computed(() => route.name),
+      loadingStatus
     }
   }
 }

@@ -23,6 +23,12 @@ export default {
     const postsStore = usePostsStore();
     const user = computed(() => usersStore.state.me.nickname || usersStore.state.me.email);
     const mainPosts = computed(() => postsStore.state.mainPosts);
+
+    onMounted(() => {
+      const { $trigger } = useNuxtApp();
+      $trigger('endLoading');
+    });
+
     return {
       user,
       mainPosts,
