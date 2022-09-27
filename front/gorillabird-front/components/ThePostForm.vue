@@ -1,10 +1,10 @@
 <template>
   <div class="post-form-container">
     <form ref="form" class="write-post-form" action="" @submit.prevent="onSubmitForm">
-      <textarea id="write-post" v-model="content" name="" cols="30" :placeholder="successMessages || '어떤 신기한 일이 있었나요?'" @input="onChangeTextarea" />
-      <div style="display: flex; justify-content: space-between;">
-        <button type="submit">click</button>
-        <button>이미지 업로드</button>
+      <textarea id="write-post" v-model="content" name="" cols="30" :placeholder="successMessages || '어떤 신기한 일이 있었나요?'" @input="onChangeTextarea" @keyup.enter.exact="onSubmitForm()" />
+      <div style="display: flex; justify-content: end;">
+        <button type="button">이미지 업로드</button>
+        <button type="submit">등록하기</button>
       </div>
     </form>
   </div>
@@ -70,6 +70,6 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
   @import '~/assets/css/the-post-form';
 </style>

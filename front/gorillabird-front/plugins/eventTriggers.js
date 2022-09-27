@@ -17,7 +17,7 @@ function on(events, handler, priority) {
 }
 
 function off(events, handler) {
-  if (!eventsListeners) return self;
+  if (!eventsListeners) return;
   events.split(' ').forEach(event => {
     if (typeof handler === 'undefined') eventsListeners[event] = [];
     else if (eventsListeners[event]) {
@@ -34,14 +34,15 @@ function trigger(...args) {
   let events;
   let data;
   let context;
+  // 여러개 동시 시작시 trigger(['init', 'something'...])
   if (typeof args[0] === 'string' || Array.isArray(args[0])) {
     events = args[0];
     data = args.slice(1, args.length);
-    context = self;
+    context = eventsListeners;
   } else {
     events = args[0].events;
     data = args[0].data;
-    context = args[0].context || self;
+    context = args[0].context || eventsListeners;
   }
 
   data.unshift(context);

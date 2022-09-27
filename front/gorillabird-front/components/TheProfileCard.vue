@@ -1,20 +1,19 @@
 <template>
-  <div>
-    {{ data }} page
-    <div class="container">
-      <h2>{{ data }} 프로필</h2>
-      <form action="" method="post" class="login-form">
-        <label for="nickname">닉네임</label>
-        <input id="profile-nickname" type="nickname" name="" :placeholder="data" required>
-        <button type="submit">수정</button>
-      </form>
+  <div class="profile-card-container">
+    <h2>{{ data }}</h2>
+    <div class="wrapper">
       <div>
-        <h3>팔로잉</h3>
-        <p>0명</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
       </div>
-      <div>
-        <h3>팔로워</h3>
-        <p>0명</p>
+      <div class="follow-container">
+        <div>
+          <h4>팔로잉</h4>
+          <p>0명</p>
+        </div>
+        <div>
+          <h4>팔로워</h4>
+          <p>0명</p>
+        </div>
       </div>
     </div>
   </div>
@@ -41,3 +40,25 @@ export default {
   },
 }
 </script>
+<style scoped>
+  .profile-card-container {
+    text-align: center;
+
+    margin: 20px 100px;
+    border: 2px solid black;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    padding: 1.5rem 2.4rem;
+  }
+
+  .follow-container {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  @media screen and (max-width: 500px) {
+    .profile-card-container {
+      margin: 20px 30px;
+    }
+  }
+</style>

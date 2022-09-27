@@ -16,6 +16,7 @@ export default defineNuxtConfig({
   ],
   // 전역 css
   css: [
-    '~/assets/css/soonsak.css'
+    '~/assets/css/soonsak.css',
+    '@fortawesome/fontawesome-svg-core/styles.css'
   ],
 });

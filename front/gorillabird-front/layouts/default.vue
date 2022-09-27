@@ -62,6 +62,7 @@ export default {
     background-color: #F7AF05;
 
     font-size: 1.5rem;
+    z-index: 9997;
   }
 
   .nav-default * {

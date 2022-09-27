@@ -1,9 +1,9 @@
 <template>
   <div>
     <NuxtLayout />
+    <BaseLoadingBar class="loading" :loading="loadingStatus" />
     <div class="grid-container">
       <!-- login 혹은 회원가입 후 좌측은 프로필 컴포넌트 보이도록 -->
-      <BaseLoadingBar class="loading" :loading="loadingStatus" />
       <NuxtPage v-if="false" class="xs-12 sm-12 lg-12" />
       <template v-else>
         <aside class="xs-12 sm-12 lg-4">
@@ -34,7 +34,6 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const usersStore = useUsersStore();
-    console.log(route.name);
 
     const { $on, $off, $trigger } = useNuxtApp();
     // const { $on, $trigger } = useEventBus();
@@ -42,9 +41,11 @@ export default {
     $on('startLoading', () => {
       loadingStatus.value = true;
     });
+    
     $on('endLoading', () => {
       loadingStatus.value = false;
     });
+    $trigger('startLoading');
     router.beforeEach(async (to, from, next) => {
       $trigger('startLoading');
       await next();
@@ -72,6 +73,7 @@ export default {
   html, body {
     margin: 0;
     padding: 0;
+    min-width: 375px;
   }
   html {
     font-size: 10px;
