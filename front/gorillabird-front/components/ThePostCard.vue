@@ -70,6 +70,7 @@ export default {
 </script>
 <style scoped>
   .postcard-container {
+    max-width: 600px;
     padding: 1rem 8rem;
     user-select: none;
   }

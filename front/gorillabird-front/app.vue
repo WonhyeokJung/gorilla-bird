@@ -2,17 +2,10 @@
   <div>
     <NuxtLayout />
     <BaseLoadingBar class="loading" :loading="loadingStatus" />
-    <div class="grid-container">
-      <!-- login 혹은 회원가입 후 좌측은 프로필 컴포넌트 보이도록 -->
-      <NuxtPage v-if="false" class="xs-12 sm-12 lg-12" />
-      <template v-else>
-        <aside class="xs-12 sm-12 lg-4">
-          <TheProfileCard />
-        </aside>
-        <main class="xs-12 sm-12 lg-8">
-          <NuxtPage />
-        </main>
-      </template>
+    <div class="main-container">
+      <div class="main-wrapper">
+        <NuxtPage class="xs-12 sm-12 lg-12" />
+      </div>
     </div>
     <Html>
       <Head>
@@ -23,6 +16,7 @@
 </template>
 <script>
 import { useUsersStore } from '~/stores/users';
+// import useEventBus from '~/utils/bus';
 import TheProfileCard from '~/components/TheProfileCard.vue'
 import BaseLoadingBar from './components/BaseLoadingBar.vue';
 export default {
@@ -34,7 +28,6 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const usersStore = useUsersStore();
-
     const { $on, $off, $trigger } = useNuxtApp();
     // const { $on, $trigger } = useEventBus();
     const loadingStatus = ref(true);
@@ -52,7 +45,8 @@ export default {
     });
 
     if (!usersStore.state.me) {
-      router.push({ name: 'intro' });
+      // router.push({ name: 'intro' });
+      router.replace('/intro');
     }
 
     return {
@@ -71,9 +65,10 @@ export default {
       font-style: normal;
   }
   html, body {
+    width: 100vw;
+    min-width: 375px;
     margin: 0;
     padding: 0;
-    min-width: 375px;
   }
   html {
     font-size: 10px;
@@ -84,5 +79,14 @@ export default {
     padding-top: 70px;
     /* 15px */
     font-size: 1.5rem;
+  }
+
+  .main-container {
+    display: flex;
+    justify-content: center;
+  }
+  .main-wrapper {
+    /* width: 800px; */
+    max-width: 800px;
   }
 </style>
