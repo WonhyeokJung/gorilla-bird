@@ -48,7 +48,8 @@ export default {
           postId: props.postId,
           content: content.value,
           user: {
-            nickname: usersStore.state.me.nickname
+            // 닉네임 변경시 유동적 변경
+            nickname: computed(() => usersStore.state.me.nickname),
           },
           // 중첩 코멘트 담는건 쉬운데.. 삭제는..?depth 이용?
           comments: [],

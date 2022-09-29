@@ -1,11 +1,11 @@
 <template>
   <div>
-    {{ data }} page
+    {{ me }} page
     <div class="container">
-      <h2>{{ data }} 프로필</h2>
-      <form action="" method="post" class="login-form">
+      <h2>{{ me }} 프로필</h2>
+      <form action="" method="post" class="login-form" @submit.prevent="onChangeNickname">
         <label for="nickname">닉네임</label>
-        <input id="profile-nickname" type="nickname" name="" :placeholder="data" required>
+        <input id="profile-nickname" v-model="nickname" type="nickname" name="" :placeholder="me" required @invalid.prevent>
         <button type="submit">수정</button>
       </form>
       <div>
@@ -20,6 +20,7 @@
   </div>
 </template>
 <script>
+import { useUsersStore } from '~/stores/users'
 import FollowList from '~/components/TheFollowList.vue';
 definePageMeta({
   layout: 'admin',
@@ -28,10 +29,12 @@ export default {
   name: 'ProfileView',
   components: { FollowList },
   setup() {
-    const data = 'profile';
+    const usersStore = useUsersStore();
+    const me = computed(() => usersStore.state.me.nickname);
+    const nickname = ref(me.value);
     // Nuxt function : <head></head> settings
     useHead({
-      title: 'Profile'
+      title: 'Profile pageee'
     });
 
     onMounted(() => {
@@ -39,9 +42,26 @@ export default {
       $trigger('endLoading');
     });
 
+    const onChangeNickname = function () {
+      try {
+        usersStore.changeNickname({
+          nickname: nickname.value
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     return {
-      data
+      me,
+      nickname,
+      onChangeNickname
     }
   },
 }
 </script>
+<style scoped>
+  input:empty:invalid {
+    background: pink;
+  }
+</style>

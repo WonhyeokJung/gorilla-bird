@@ -1,6 +1,8 @@
 export const useUsersStore = defineStore('users', () => {
   const state = reactive({
     me: { nickname: 'abc', email: 'abc@abc.com' },
+    followingList: [],
+    followerList: []
   });
 
   function signUp(payload) {
@@ -14,10 +16,15 @@ export const useUsersStore = defineStore('users', () => {
     state.me = null;
   }
 
+  function changeNickname(payload) {
+    state.me.nickname = payload.nickname;
+  }
+
   return {
     state,
     signUp,
     login,
-    logout
+    logout,
+    changeNickname
   }
 });

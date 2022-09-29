@@ -45,7 +45,7 @@ export default {
           content: content.value,
           // 백엔드가 보내줄 내용이라 타입을 미리 물어보고 확인해야 함.
           user: {
-            nickname: usersStore.state.me.nickname
+            nickname: computed(() => usersStore.state.me.nickname)
           },
           comments: [],
           images: [],

@@ -11,11 +11,11 @@
         <template #content>
           <div>{{ comment.content }}</div>
         </template>
-        <template #buttons>
+        <!-- <template #buttons>
           <button @click="onSubmitComment(comment)">추가</button>
           <button>삭제</button>
           {{ depth }}
-        </template>
+        </template> -->
       </BaseCommentList>
     </div>
   </div>
