@@ -85,8 +85,9 @@ export default {
     display: flex;
     justify-content: center;
   }
+  /* 하위 컨텐츠 width 결정 */
   .main-wrapper {
-    /* width: 800px; */
+    width: 800px;
     max-width: 800px;
   }
 </style>

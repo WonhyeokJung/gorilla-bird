@@ -1,5 +1,7 @@
 .post-form-container {
   position: relative;
+  /* width: 100%; */
+  /* margin: 3rem; */
   padding: 3rem 4rem;
 }
 
@@ -8,6 +10,7 @@
 
 #write-post {
   width: 100%;
+  max-width: 1000px;
   height: 12rem;
   margin: 0;
   border-color: #F7AF05;

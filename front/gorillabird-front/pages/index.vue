@@ -1,7 +1,7 @@
 <template>
   <div>
+    <TheProfileCard></TheProfileCard>
     <PostForm v-if="!!user" />
-    {{ user }}님, 어서오세요!
     <PostCard v-for="p in mainPosts" :key="p.id" :post="p" />
   </div>
 </template>
@@ -9,11 +9,12 @@
 <script>
 import PostCard from '~/components/ThePostCard.vue';
 import PostForm from '~/components/ThePostForm.vue';
+import TheProfileCard from '~/components/TheProfileCard.vue';
 import { useUsersStore } from '~/stores/users';
 import { usePostsStore } from '~/stores/posts';
 export default {
   name: 'IndexView',
-  components: { PostCard, PostForm },
+  components: { PostCard, PostForm, TheProfileCard },
   setup() {
     const name = 'Nuxt';
     const usersStore = useUsersStore();

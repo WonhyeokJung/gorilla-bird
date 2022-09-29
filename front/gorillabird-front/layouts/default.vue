@@ -129,7 +129,7 @@ export default {
   }
 
   @media screen and (max-width: 700px) {
-    .nav-h1.nav-h1 {
+    .nav-default .nav-h1 {
       display: none;
     }
 

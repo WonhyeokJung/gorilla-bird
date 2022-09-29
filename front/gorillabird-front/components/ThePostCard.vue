@@ -10,19 +10,30 @@
           <font-awesome-icon class="icon" icon="fa-solid fa-repeat" />
           <font-awesome-icon class="icon icon-instagram" :icon="['fa-brands', 'fa-instagram']" />
           <font-awesome-icon class="icon" :icon="[true ? 'fa-solid' : 'fa-regular', 'fa-heart']" />
-          <font-awesome-icon class="icon" icon="fa-regular fa-comments" />
+          <font-awesome-icon class="icon" icon="fa-regular fa-comments" @click="onToggleComment" />
           <!-- dropdown 개발후 수정/삭제 추가 -->
           <font-awesome-icon class="icon" icon="fa-regular fa-trash-can" @click="onRemovePost" />
         </div>
       </div>
     </div>
+    <template v-if="isCommentOpened">
+      <BaseCommentForm :post-id="post.id" />
+      <ClientOnly fallback-tag="span">
+        <BaseCommentList :comments="post.comments" :depth="0" />
+        <template #fallback>
+          <p>Loading comments...</p>
+        </template>
+      </ClientOnly>
+    </template>
   </div>
 </template>
 <script>
 import { usePostsStore } from '~/stores/posts'
+import BaseCommentForm from './BaseCommentForm.vue'
+import BaseCommentList from './BaseCommentList.vue'
 export default {
   name: 'ThePostCardComponent',
-  components: {},
+  components: { BaseCommentForm, BaseCommentList },
   directives: {},
   provide() {
     return {
@@ -40,6 +51,10 @@ export default {
   },
   setup(props, { attrs, slots, emit, expose }) {
     const postsStore = usePostsStore();
+    const isCommentOpened = ref(false);
+    const onToggleComment = function () {
+      isCommentOpened.value = !isCommentOpened.value;
+    }
     const onRemovePost = function () {
       postsStore.removeMainPost({
         id: props.post.id,
@@ -47,32 +62,21 @@ export default {
     }
 
     return {
+      isCommentOpened,
+      onToggleComment,
       onRemovePost
     }
   },
-  data() {
-    return {
-      sampleData: ''
-    }
-  },
-  computed: {},
-  watch: {},
-  beforeCreate() {},
-  created() {},
-  beforeMount() {},
-  mounted() {},
-  beforeUpdate() {},
-  updated() {},
-  beforeUnmount() {},
-  unmounted() {},
-  methods: {}
 }
 </script>
 <style scoped>
   .postcard-container {
-    max-width: 600px;
+    max-width: 800px;
     padding: 1rem 8rem;
+
+    box-sizing: border-box;
     user-select: none;
+    -webkit-user-select: none;
   }
   .postcard-buttons-wrapper {
     display: flex;
@@ -104,6 +108,7 @@ export default {
   .icon:hover:not(.fa-instagram):not(.fa-heart) {
     color: lightblue;
     filter: drop-shadow(crimson 0px 0 0.4rem);
+    will-change: filter;
   } 
 
   .fa-heart path {
@@ -118,17 +123,11 @@ export default {
       transform: scale(1.125, 1.125);
     -webkit-transition: -webkit-transfrom .5s;
       transition: transform .5s;
-
-    isolation: isolate;
+    /* will-change: filter; */
+    /* isolation: isolate; */
   }
 
   .fa-instagram:hover {
     transform: scale(1.125);
-  }
-
-  @media screen and (max-width: 500px) {
-    .postcard-container {
-      padding: 2rem 3rem;
-    }
   }
 </style>
