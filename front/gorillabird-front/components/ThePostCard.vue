@@ -123,7 +123,7 @@ export default {
       transform: scale(1.125, 1.125);
     -webkit-transition: -webkit-transfrom .5s;
       transition: transform .5s;
-    /* will-change: filter; */
+    will-change: filter;
     /* isolation: isolate; */
   }
 

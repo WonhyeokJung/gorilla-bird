@@ -17,8 +17,9 @@
 <script>
 import { useUsersStore } from '~/stores/users';
 // import useEventBus from '~/utils/bus';
-import TheProfileCard from '~/components/TheProfileCard.vue'
+import TheProfileCard from '~/components/TheProfileCard.vue';
 import BaseLoadingBar from './components/BaseLoadingBar.vue';
+
 export default {
   components: { BaseLoadingBar, TheProfileCard },
   setup() {
@@ -39,9 +40,9 @@ export default {
       loadingStatus.value = false;
     });
     $trigger('startLoading');
-    router.beforeEach(async (to, from, next) => {
+    router.beforeEach((to, from, next) => {
       $trigger('startLoading');
-      await next();
+      next();
     });
 
     if (!usersStore.state.me) {

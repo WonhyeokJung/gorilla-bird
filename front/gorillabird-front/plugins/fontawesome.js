@@ -14,4 +14,4 @@ library.add(fas, far, fab)
 export default defineNuxtPlugin((nuxtApp) => {
   // font-awesome-icon이란 컴포넌트 생성
   nuxtApp.vueApp.component('font-awesome-icon', FontAwesomeIcon, {})
-})
+});

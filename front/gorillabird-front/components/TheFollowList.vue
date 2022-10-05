@@ -1,22 +1,16 @@
 <template>
   <div>
     <ol>
-      <li>
-        <span>닉네임</span>
-        <i>제거아이콘</i>
-      </li>
-      <li>
-        <span>썸띵</span>
-        <i>아이콘</i>
-      </li>
-      <li>
-        <span>썸팅2</span>
-        <i>아이콘2</i>
+      <li v-for="user in follow" :key="user.id">
+        <span>{{ user.id }}</span>
+        <i>{{ user.nickname }}</i>
+        <button @click="remove(user)">삭제</button>
       </li>
     </ol>
   </div>
 </template>
 <script>
+import { useUsersStore } from '~~/stores/users'
 export default {
   name: 'TheFollowListComponent',
   components: {},
@@ -29,23 +23,17 @@ export default {
     return {
     }
   },
-  props: {},
-  setup() {},
-  data() {
-    return {
-      sampleData: ''
+  props: {
+    follow: {
+      type: Array,
+      required: true
+    },
+    remove: {
+      type: Function,
+      required: true
     }
   },
-  computed: {},
-  watch: {},
-  beforeCreate() {},
-  created() {},
-  beforeMount() {},
-  mounted() {},
-  beforeUpdate() {},
-  updated() {},
-  beforeUnmount() {},
-  unmounted() {},
-  methods: {}
+  setup() {
+  },
 }
 </script>

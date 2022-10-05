@@ -10,11 +10,11 @@
       </form>
       <div>
         <h3>팔로잉</h3>
-        <FollowList />
+        <FollowList :follow="state.followingList" :remove="removeFollowing" />
       </div>
       <div>
         <h3>팔로워</h3>
-        <FollowList />
+        <FollowList :follow="state.followerList" :remove="removeFollower" />
       </div>
     </div>
   </div>
@@ -30,7 +30,9 @@ export default {
   components: { FollowList },
   setup() {
     const usersStore = useUsersStore();
-    const me = computed(() => usersStore.state.me.nickname);
+    const { state } = storeToRefs(usersStore);
+    const { removeFollowing, removeFollower } = usersStore;
+    const me = computed(() => state.value.me.nickname);
     const nickname = ref(me.value);
     // Nuxt function : <head></head> settings
     useHead({
@@ -53,9 +55,12 @@ export default {
     }
 
     return {
+      state,
       me,
       nickname,
-      onChangeNickname
+      onChangeNickname,
+      removeFollowing,
+      removeFollower
     }
   },
 }
