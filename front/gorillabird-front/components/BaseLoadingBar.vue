@@ -6,7 +6,7 @@
       <div />
     </div>
     <!-- z-index 추가시 navbar도 가리기 가능. -->
-    <div style="position:fixed; width: 100vw; height: 100vh; backdrop-filter: blur(3px); z-index: 9998;" />
+    <div style="position:fixed; width: 100vw; height: 100vh; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); z-index: 9998;" />
   </div>
 </template>
 <script>

@@ -42,7 +42,7 @@ npm run preview
 Checkout the [deployment documentation](https://v3.nuxtjs.org/guide/deploy/presets) for more information.
 
 # 필수작업
-Intersection Observer 적용 (Vue Slider에도 적용 가능할 듯?)
+Index.vue - Intersection Observer 적용 (로딩 페이지 적용 / 로직 적절한 위치로 수정 / 뒤로 가기시 기존 스크롤 위치 저장 구현)/ virtualized list(안보이는 게시글 없앴다 스크롤 올리면 다시 만들기 등)
 
 ## 다음작업
 로그인 항목 css 마무리 / 로그인 중복 컨텐츠및 불필요 컨텐츠 정리, ref 되도록 제거

@@ -3,7 +3,7 @@
     <div class="postcard-container">
       <img src="" alt="">
       <div>
-        <h3>{{ post.id }}</h3>
+        <h3 @click="toPostDetail">{{ post.id }}</h3>
         <div>{{ post }}</div>
         <div class="postcard-buttons-wrapper">
           <!-- 좋아요 / 리트윗 / 스크랩 -->
@@ -18,12 +18,14 @@
     </div>
     <template v-if="isCommentOpened">
       <BaseCommentForm :post-id="post.id" />
-      <ClientOnly fallback-tag="span">
-        <BaseCommentList :comments="post.comments" :depth="0" />
+      <Suspense>
+        <template #default>
+          <BaseCommentList :comments="post.comments" :depth="0" />
+        </template>
         <template #fallback>
           <p>Loading comments...</p>
         </template>
-      </ClientOnly>
+      </Suspense>
     </template>
   </div>
 </template>
@@ -51,6 +53,7 @@ export default {
   },
   setup(props, { attrs, slots, emit, expose }) {
     const postsStore = usePostsStore();
+    const router = useRouter();
     const isCommentOpened = ref(false);
     const onToggleComment = function () {
       isCommentOpened.value = !isCommentOpened.value;
@@ -61,10 +64,16 @@ export default {
       });
     }
 
+    const toPostDetail = function () {
+      console.log(props.post)
+      router.push({ name: 'user-post-id', params: { user: props.post.user.nickname, id: props.post.id } });
+    }
+
     return {
       isCommentOpened,
       onToggleComment,
-      onRemovePost
+      onRemovePost,
+      toPostDetail
     }
   },
 }

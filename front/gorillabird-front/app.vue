@@ -44,7 +44,7 @@ export default {
       $trigger('startLoading');
       next();
     });
-
+    
     if (!usersStore.state.me) {
       // router.push({ name: 'intro' });
       router.replace('/intro');

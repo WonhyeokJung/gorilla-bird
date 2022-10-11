@@ -5,7 +5,7 @@
         <div>
           <nuxt-link to="/" style="margin-inline: 0 0;"><img class="logo" src="../assets/gorilla-2.png" alt=""></nuxt-link>
           <!-- 전체 페이지를 새로고치는 문제. -->
-          <h1 class="nav-h1"><nuxt-link to="/" @click="$router.go({ path: '/', force: true })">GorillaBird</nuxt-link></h1>
+          <h1 class="nav-h1"><nuxt-link to="/" @click="onReload">GorillaBird</nuxt-link></h1>
         </div>
         <nav>
           <div class="input-container">
@@ -40,12 +40,20 @@ export default {
     // where `%s` is replaced with the title
       titleTemplate: '%s - Site Title'
     });
-    const route = useRoute();
+    const [route, router] = [useRoute(), useRouter()];
     const usersStore = useUsersStore();
-
+    
+    const onReload = function () {
+      if (router.currentRoute.value.name === 'index') {
+        router.go({ path: '/', force: true });
+      } else {
+        return;
+      }
+    }
     return {
       dynamic: computed(() => route.name),
       isLoggedIn: computed(() => usersStore.state.me),
+      onReload
     }
   },
 }

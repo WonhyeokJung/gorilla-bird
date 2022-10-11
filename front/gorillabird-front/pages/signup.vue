@@ -71,7 +71,8 @@
 <script>
 import { useUsersStore } from '~/stores/users';
 definePageMeta({
-  layout: false
+  layout: false,
+  middleware: ['anonymous']
 });
 export default {
   name: 'SignUpView',

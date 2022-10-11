@@ -60,12 +60,11 @@ export default {
         console.log(err);
       }
     }
-
     return {
       content,
       successMessages,
       onChangeTextarea,
-      onSubmitForm
+      onSubmitForm,
     }
   },
 }
