@@ -7,6 +7,7 @@
         <button @click="remove(user)">삭제</button>
       </li>
     </ol>
+    <button v-if="hasMoreFollow" @click="getMoreFollows">더보기</button>
   </div>
 </template>
 <script>
@@ -27,8 +28,16 @@ export default {
     follow: {
       type: Array,
       required: true
-    },
+    },  
     remove: {
+      type: Function,
+      required: true
+    },
+    hasMoreFollow: {
+      type: Boolean,
+      required: false,
+    },
+    getMoreFollows: {
       type: Function,
       required: true
     }

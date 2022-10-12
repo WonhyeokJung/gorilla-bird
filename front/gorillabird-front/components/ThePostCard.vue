@@ -3,7 +3,9 @@
     <div class="postcard-container">
       <img src="" alt="">
       <div>
-        <h3 @click="toPostDetail">{{ post.id }}</h3>
+        <!-- <h3 @click="toPostDetail"> -->
+        <h3>
+          <nuxt-link :to="{ name: 'user-post-id', params: { user: post.user.nickname, id: post.id } }">{{ post.id }}</nuxt-link></h3>
         <div>{{ post }}</div>
         <div class="postcard-buttons-wrapper">
           <!-- 좋아요 / 리트윗 / 스크랩 -->
@@ -64,16 +66,16 @@ export default {
       });
     }
 
-    const toPostDetail = function () {
-      console.log(props.post)
-      router.push({ name: 'user-post-id', params: { user: props.post.user.nickname, id: props.post.id } });
-    }
+    // const toPostDetail = function () {
+    //   console.log(props.post);
+    //   router.push({ name: 'user-post-id', params: { user: props.post.user.nickname, id: props.post.id } });
+    // }
 
     return {
       isCommentOpened,
       onToggleComment,
       onRemovePost,
-      toPostDetail
+      // toPostDetail
     }
   },
 }
