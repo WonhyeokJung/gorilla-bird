@@ -7,7 +7,7 @@ export const useIndexStore = defineStore('index', () => {
   return {
     count,
     increment,
-    doubleCount
+    doubleCount,
   }
 });
 

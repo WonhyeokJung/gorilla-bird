@@ -32,7 +32,9 @@ export const useUsersStore = defineStore('users', () => {
         id: 3,
         nickname: 'dummy3',
       },
-    ]
+    ],
+    hasMoreFollowings: true,
+    hasMoreFollowers: true,
   });
 
   function signUp(payload) {
@@ -65,6 +67,35 @@ export const useUsersStore = defineStore('users', () => {
     state.followerList.splice(index, 1);
   }
 
+  // 실무에선 last Id를 가져와서(실시간으로 변하니까) 그것을 통해 불러옴(limit가 아님!).
+  const limit = 10;
+
+  const totalFollowings = 27;
+  function loadMoreFollowings(payload) {
+    if (state.hasMoreFollowings) {
+      const diff = totalFollowings - state.followingList.length;
+      const fakeFollowings = new Array(diff > limit ? limit : diff).fill().map(v => ({
+        id: Math.floor(Math.random()*(10**13)),
+        nickname: `fakeman${Math.floor(Math.random()*100)}`
+      }));
+      state.followingList = state.followingList.concat(fakeFollowings);
+      state.hasMoreFollowings = fakeFollowings.length === limit;
+    }
+  }
+
+  const totalFollowers = 31;
+  function loadMoreFollowers(payload) {
+    if (state.hasMoreFollowers) {
+      const diff = totalFollowers - state.followerList.length;
+      const fakeFollowers = new Array(diff > limit ? limit : diff).fill().map(v => ({
+        id: Math.floor(Math.random()*(10**2)),
+        nickname: `fakeman${Math.floor(Math.random()*100)}`
+      }));
+      state.followerList = state.followerList.concat(fakeFollowers);
+      state.hasMoreFollowers = fakeFollowers.length === limit;
+    }
+  }
+
   return {
     state,
     signUp,
@@ -74,6 +105,8 @@ export const useUsersStore = defineStore('users', () => {
     addFollowing,
     addFollower,
     removeFollowing,
-    removeFollower
+    removeFollower,
+    loadMoreFollowings,
+    loadMoreFollowers,
   }
 });
