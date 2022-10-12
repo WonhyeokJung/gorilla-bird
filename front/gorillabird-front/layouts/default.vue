@@ -10,7 +10,7 @@
         <nav>
           <div class="input-container">
             <label for="nav-searchbar" />
-            <input id="nav-searchbar" type="text" placeholder="Search">
+            <input id="nav-searchbar" v-model="hashtag" type="text" placeholder="Search" @keyup.enter.exact="onSearchHashtag">
             <img class="search-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABiUlEQVRIie2Wu04CQRSGP0G2EUtIbHwA8B3EQisLIcorEInx8hbEZ9DKy6toDI1oAgalNFpDoYWuxZzJjoTbmSXERP7kZDbZ859vdmb27MJcf0gBUAaugRbQk2gBV3IvmDa0BLwA4Zh4BorTACaAU6fwPXAI5IAliTxwBDScvJp4vWWhH0BlTLEEsC+5Fu6lkgNdV/gKDnxHCw2I9rSiNQNV8baBlMZYJtpTn71KAg9SY3dUYn9xezLPgG8P8BdwLteq5X7CzDbnAbXKS42WxtQVUzoGeFlqdEclxXrnhmhhkqR+8KuMqzHA1vumAddl3IwB3pLxVmOyr1NjwKQmURJ4lBp7GmOAafghpg1qdSDeDrCoNReJWmZB4dsAPsW7rYVa1Rx4FbOEw5TEPKmFvgMZX3DCgYeYNniMaQ5piTXghGhPLdTmZ33hYNpem98f/UHRwSxvhqhXx4anMA3/EmhiOlJPJnSBOb3uQcpOE65VhujPpAms/Bu4u+x3swRbeB24mTV4LgB+AFuLedkPkcmmAAAAAElFTkSuQmCC">
           </div>
           <nuxt-link v-if="isLoggedIn" to="/profile">Profile</nuxt-link>
@@ -40,8 +40,8 @@ export default {
     // where `%s` is replaced with the title
       titleTemplate: '%s - Site Title'
     });
-    const [route, router] = [useRoute(), useRouter()];
-    const usersStore = useUsersStore();
+    const [route, router, usersStore] = [useRoute(), useRouter(), useUsersStore()];
+    const hashtag = ref('');
     
     const onReload = function () {
       if (router.currentRoute.value.name === 'index') {
@@ -50,10 +50,20 @@ export default {
         return;
       }
     }
+
+    const onSearchHashtag = function () {
+      console.log(hashtag.value, 'activated');
+      router.push({
+        path: `/hashtag/${hashtag.value}`
+      });
+      hashtag.value = '';
+    }
     return {
+      hashtag,
       dynamic: computed(() => route.name),
       isLoggedIn: computed(() => usersStore.state.me),
-      onReload
+      onReload,
+      onSearchHashtag,
     }
   },
 }

@@ -1,7 +1,6 @@
 <template>
   <div class="index-container">
-    <TheProfileCard></TheProfileCard>
-    <PostForm v-if="!!user" />
+    <TheProfileCard />
     <PostCard v-for="p in mainPosts" :key="p.id" :post="p" />
     <BaseInfiniteScrollComp />
   </div>
@@ -9,22 +8,16 @@
 
 <script>
 definePageMeta({
-  middleware: [
-    () => { 
-      console.log('inline Middleware');
-    }
-  ]
-});
-
+  middleware: [() => { console.log('inline') }]
+})
 import PostCard from '~/components/ThePostCard.vue';
-import PostForm from '~/components/ThePostForm.vue';
 import TheProfileCard from '~/components/TheProfileCard.vue';
 import BaseInfiniteScrollComp from '~/components/BaseInfiniteScrollComp.vue'
 import { useUsersStore } from '~/stores/users';
 import { usePostsStore } from '~/stores/posts';
 export default {
-  name: 'IndexView',
-  components: { PostCard, PostForm, TheProfileCard, BaseInfiniteScrollComp },
+  name: 'UserView',
+  components: { PostCard, TheProfileCard, BaseInfiniteScrollComp },
   setup() {
     const name = 'Nuxt';
     const usersStore = useUsersStore();
