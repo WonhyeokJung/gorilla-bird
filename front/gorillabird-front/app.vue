@@ -73,6 +73,7 @@ export default {
   }
   html {
     font-size: 10px;
+    scroll-behavior: smooth;
   }
   body {
     font-family: 'IBMPlexSansKR-Regular' !important;
