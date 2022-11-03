@@ -109,8 +109,9 @@ export default {
       }
       try {
         await usersStore.signUp({
+          email: signUpForms.email,
           nickname: signUpForms.nickname,
-          email: signUpForms.email
+          password: signUpForms.password
         });
         await router.push('/');
       } catch (err) {

@@ -1,6 +1,8 @@
+import * as api from '@/api';
 export const useUsersStore = defineStore('users', () => {
   const state = reactive({
-    me: { nickname: 'abc', email: 'abc@abc.com' },
+    // me: { nickname: 'abc', email: 'abc@abc.com' },
+    me: '',
     followingList: [
       {
         id: 1,
@@ -38,10 +40,21 @@ export const useUsersStore = defineStore('users', () => {
   });
 
   function signUp(payload) {
+    api.$_postApi('user', {
+      email: payload.email,
+      nickname: payload.nickname,
+      password: payload.password,
+    });
     // 회원가입 동시에 로그인
     state.me = payload;
   }
   function login(payload) {
+    api.$_getApi('login', {
+      headers: {
+        "hi": "hello"
+      }
+    });
+    // api.$_getApi('login')
     state.me = payload;
   }
   function logout() {

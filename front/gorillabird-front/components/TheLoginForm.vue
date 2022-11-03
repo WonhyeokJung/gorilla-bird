@@ -11,13 +11,13 @@
           <div class="form-border" />
         </div>
         <div ref="passwordInputContainer" :class="['default-input-container']">
-          <label for="password">비밀번호</label>
-          <input id="password" ref="loginPassword" v-model="password" type="password" name="" required @focus="onFocusPassword" @blur="onBlurPassword">
+          <label for="login-password">비밀번호</label>
+          <input id="login-password" ref="loginPassword" v-model="password" type="password" name="" required @focus="onFocusPassword" @blur="onBlurPassword">
           <div class="form-border" />
         </div>
-        <Nuxt-link class="signup-link" to="/signup">Don't have an account?</Nuxt-link>
+        <nuxt-link to="/signup" class="signup-link">Don't have an account?</nuxt-link>
         <div class="button-container">
-          <button type="submit" :disabled="!valid.value" @click="onLogin">로그인</button>
+          <button type="submit" :disabled="!valid" @click="onLogin">로그인</button>
         </div>
       </form>
       {{ email }}
@@ -46,7 +46,7 @@ export default {
   },
   props: {},
   setup() {
-    const valid = ref(false);
+    const valid = ref(true);
     const email = ref('');
     const password = ref('');
     const usersStore = useUsersStore();
@@ -82,7 +82,7 @@ export default {
     const onFocusPassword = function () {
       passwordInputContainer.value.classList.add('focus');
     }
-    const onBluePassword = function () {
+    const onBlurPassword = function () {
       if (!password.value.length) {
             passwordInputContainer.value.classList.remove('focus');
           }
@@ -100,7 +100,7 @@ export default {
       onFocusEmail,
       onBlurEmail,
       onFocusPassword,
-      onBluePassword,
+      onBlurPassword,
       emailInputContainer,
       passwordInputContainer
     }
