@@ -78,7 +78,7 @@ app.post('/user/login', cors({ methods: ['POST'] }), async (req, res, next) => {
   if (!password) {
     return res.status(400).send('이메일이나 비밀번호가 올바르지 않습니다.');
   }
-  // 생성한 암호화된 쿠키에 유저정보 세팅후
+  // 생성한 암호화된 쿠키 = 유저정보 객체를 세션에 저장
   // 프런트에 그 쿠키 내려보내주기.
   res.status(200).send();
 })
