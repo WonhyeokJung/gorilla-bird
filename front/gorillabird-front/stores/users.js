@@ -1,5 +1,7 @@
 import * as api from '@/api';
+
 export const useUsersStore = defineStore('users', () => {
+  const router = useRouter();
   const state = reactive({
     // me: { nickname: 'abc', email: 'abc@abc.com' },
     me: '',
@@ -39,23 +41,30 @@ export const useUsersStore = defineStore('users', () => {
     hasMoreFollowers: true,
   });
 
-  function signUp(payload) {
-    api.$_postApi('user', {
+  async function signUp(payload) {
+    const { data, error } = await api.$_postApi('user', {
       email: payload.email,
       nickname: payload.nickname,
       password: payload.password,
     });
+    if (error.value) {
+      alert(error.value.message);
+      return;
+    }
     // 회원가입 동시에 로그인
     state.me = payload;
+    await router.push('/');
   }
   function login(payload) {
-    api.$_getApi('login', {
-      headers: {
-        "hi": "hello"
-      }
+    api.$_postApi('user/login', {
+      email: payload.email,
+      password: payload.password,
     });
     // api.$_getApi('login')
-    state.me = payload;
+    state.me = {
+      nickname: payload.nickname,
+      email: payload.email,
+    };
   }
   function logout() {
     state.me = null;

@@ -33,9 +33,9 @@ async function $_postApi(url, reqData=null, config=null) {
     if (process.dev) {
       console.error(err);
     }
-    error.value = err;
+    error.value = err?.response?.data ?? { errorCode: 0, message: '서버 상에 문제가 발생했습니다.'};
   }
-  return { data, error }
+  return { data, error };
 }
 
 export {

@@ -16,6 +16,7 @@
         name="" 
         placeholder="e-mail" 
         required 
+        autofocus 
         @focus="onFocus" 
         @invalid.prevent
       >
@@ -50,6 +51,7 @@
       >
       <div :class="[errors.confirmPassword.value.length > 0 ? 'text-warning' : '']">{{ errors.confirmPassword.value }}</div>
       <label for="password">Nickname</label>
+      <!-- required 있으면 비어있을 시 invalid로 인식하여 submit 진행이 안됨. -->
       <input 
         id="signup-nickname" 
         v-model="signUpForms.nickname.value"
@@ -57,7 +59,7 @@
         type="nickname" 
         name="" 
         placeholder="nickname" 
-        required 
+        required
         @focus="onFocus" 
         @invalid.prevent
       >
@@ -102,21 +104,16 @@ export default {
     const onFocus = () => submit.value = false;
     const onSubmit = () => submit.value = true;
 
-    const onSubmitForm = async function () {
+    const onSubmitForm = function () {
       // error message 있을 시, 가입 방지
       for (let error of Object.values(errors)) {
         if (error) return;
       }
-      try {
-        await usersStore.signUp({
-          email: signUpForms.email,
-          nickname: signUpForms.nickname,
-          password: signUpForms.password
-        });
-        await router.push('/');
-      } catch (err) {
-        console.log(err);
-      }
+      usersStore.signUp({
+        email: signUpForms.email,
+        nickname: signUpForms.nickname,
+        password: signUpForms.password
+      });
     }
 
     onMounted(() => {

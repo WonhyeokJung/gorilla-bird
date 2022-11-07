@@ -5,7 +5,7 @@
         <img src="" alt="" style="width: 150px; height: 150px; overflow:hidden; border: 2px solid black; border-radius: 9999px; ">
       </div>
       <div class="profile-card-info">
-        <h1 class="profile-card-id">{{ data }}</h1>
+        <h1 class="profile-card-id">{{ usersStore.state.me.nickname }}</h1>
         <ul class="follow-container">
           <li>
             <button>0<span>following</span></button>
@@ -23,6 +23,7 @@
   </div>
 </template>
 <script>
+import { useUsersStore } from '~/stores/users';
 export default {
   name: 'TheProfileCard',
   components: {},
@@ -37,9 +38,10 @@ export default {
   },
   props: {},
   setup() {
-    const data = 'id';
+    const usersStore = useUsersStore();
+    console.log(usersStore)
     return {
-      data
+      usersStore
     }
   },
 }
